@@ -27,7 +27,7 @@ func (e *entryRPCClient) Load(rtm *rt.Runtime) rt.Value {
 }
 
 type entryRPCServer struct{
-	P *Plugin
+	P Plugin
 }
 
 func (s *entryRPCServer) Load(rtm *rt.Runtime, resp *rt.Value) error {
@@ -36,7 +36,7 @@ func (s *entryRPCServer) Load(rtm *rt.Runtime, resp *rt.Value) error {
 }
 
 type Entry struct{
-	P *Plugin
+	P Plugin
 }
 
 func (e *Entry) Server(b *plugin.MuxBroker) (interface{}, error) {
