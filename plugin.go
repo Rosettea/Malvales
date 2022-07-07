@@ -8,16 +8,16 @@ import (
 )
 
 type Plugin interface{
-	Load(*rt.Runtime) rt.Value
+	Loader(*rt.Runtime) rt.Value
 }
 
 type entryRPCClient struct{
 	client *rpc.Client
 }
 
-func (e *entryRPCClient) Load(rtm *rt.Runtime) rt.Value {
+func (e *entryRPCClient) Loader(rtm *rt.Runtime) rt.Value {
 	var resp *rt.Value
-	err := e.client.Call("Plugin.Load", rtm, &resp)
+	err := e.client.Call("Plugin.Loader", rtm, &resp)
 	if err != nil {
 		// TODO: return nil (or some value to indicate err)
 		panic(err)
@@ -30,8 +30,8 @@ type entryRPCServer struct{
 	P Plugin
 }
 
-func (s *entryRPCServer) Load(rtm *rt.Runtime, resp *rt.Value) error {
-	*resp = s.P.Load(rtm)
+func (s *entryRPCServer) Loader(rtm *rt.Runtime, resp *rt.Value) error {
+	*resp = s.P.Loader(rtm)
 	return nil
 }
 
