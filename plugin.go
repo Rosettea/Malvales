@@ -7,7 +7,7 @@ import (
 	rt "github.com/arnodel/golua/runtime"
 )
 
-type Plugin interface{
+type Module interface{
 	Loader(*rt.Runtime) rt.Value
 }
 
@@ -27,20 +27,20 @@ func (e *entryRPCClient) Loader(rtm *rt.Runtime) rt.Value {
 }
 
 type entryRPCServer struct{
-	P Plugin
+	M Module
 }
 
 func (s *entryRPCServer) Loader(rtm *rt.Runtime, resp *rt.Value) error {
-	*resp = s.P.Loader(rtm)
+	*resp = s.M.Loader(rtm)
 	return nil
 }
 
 type Entry struct{
-	P Plugin
+	M Module
 }
 
 func (e *Entry) Server(b *plugin.MuxBroker) (interface{}, error) {
-	return &entryRPCServer{P: e.P}, nil
+	return &entryRPCServer{P: e.M}, nil
 }
 
 func (e *Entry) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
