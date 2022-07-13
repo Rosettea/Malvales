@@ -40,7 +40,7 @@ type Entry struct{
 }
 
 func (e *Entry) Server(b *plugin.MuxBroker) (interface{}, error) {
-	return &entryRPCServer{P: e.M}, nil
+	return &entryRPCServer{M: e.M}, nil
 }
 
 func (e *Entry) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
