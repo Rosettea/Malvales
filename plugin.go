@@ -17,7 +17,7 @@ type entryRPCClient struct{
 
 func (e *entryRPCClient) Loader() rt.Value {
 	var resp *rt.Value
-	err := e.client.Call("Plugin.Loader", rtm, &resp)
+	err := e.client.Call("Plugin.Loader", new(interface{}), &resp)
 	if err != nil {
 		// TODO: return nil (or some value to indicate err)
 		panic(err)
@@ -30,8 +30,8 @@ type entryRPCServer struct{
 	M Module
 }
 
-func (s *entryRPCServer) Loader(rtm *rt.Runtime, resp *rt.Value) error {
-	*resp = s.M.Loader(rtm)
+func (s *entryRPCServer) Loader(_ interface{}, resp *rt.Value) error {
+	*resp = s.M.Loader()
 	return nil
 }
 
