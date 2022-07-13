@@ -8,14 +8,14 @@ import (
 )
 
 type Module interface{
-	Loader(*rt.Runtime) rt.Value
+	Loader() rt.Value
 }
 
 type entryRPCClient struct{
 	client *rpc.Client
 }
 
-func (e *entryRPCClient) Loader(rtm *rt.Runtime) rt.Value {
+func (e *entryRPCClient) Loader() rt.Value {
 	var resp *rt.Value
 	err := e.client.Call("Plugin.Loader", rtm, &resp)
 	if err != nil {
